@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SysonDev - Labs</title>
+<meta name="description" content="SysonDev - Labs. Muy pronto.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root {
+    --bg: #060B1A;
+    --surface: #0B1830;
+    --cyan: #2DE2E6;
+    --violet: #7C5CFC;
+    --ice: #E9EEFB;
+    --slate: #7C8AAE;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
+    background: radial-gradient(circle at 50% 20%, #0B1830 0%, #060B1A 60%, #030612 100%);
+    color: var(--ice);
+    font-family: 'Futura', 'Century Gothic', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Sutil red de nodos de fondo */
+  .nodes {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.35;
+  }
+
+  .nodes span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 8px 1px rgba(45, 226, 230, 0.6);
+    animation: drift 14s ease-in-out infinite;
+  }
+
+  .nodes span:nth-child(odd) { background: var(--violet); box-shadow: 0 0 8px 1px rgba(124, 92, 252, 0.6); }
+
+  @keyframes drift {
+    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+    50% { transform: translateY(-18px) translateX(10px); opacity: 0.8; }
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 56px 44px;
+    max-width: 480px;
+  }
+
+  .logo {
+    width: 132px;
+    height: auto;
+    margin: 0 auto 8px;
+    display: block;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 28px 0 6px;
+    color: var(--ice);
+  }
+
+  .sub {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: var(--slate);
+    margin: 0 0 32px;
+    text-transform: uppercase;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(45, 226, 230, 0.08);
+    border: 1px solid rgba(124, 92, 252, 0.35);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ice);
+    margin-bottom: 22px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  p.msg {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--slate);
+    margin: 0 0 30px;
+  }
+
+  .contact {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    color: var(--ice);
+    text-decoration: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(45, 226, 230, 0.14), rgba(124, 92, 252, 0.14));
+    border: 1px solid rgba(233, 238, 251, 0.12);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .contact:hover {
+    border-color: rgba(45, 226, 230, 0.6);
+    transform: translateY(-1px);
+  }
+
+  footer {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(124, 138, 174, 0.55);
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+  <div class="nodes" aria-hidden="true">
+    <span style="top:12%; left:18%;"></span>
+    <span style="top:22%; left:78%; animation-delay: 1s;"></span>
+    <span style="top:68%; left:12%; animation-delay: 2s;"></span>
+    <span style="top:78%; left:82%; animation-delay: 3s;"></span>
+    <span style="top:40%; left:6%; animation-delay: 4s;"></span>
+    <span style="top:15%; left:50%; animation-delay: 1.5s;"></span>
+    <span style="top:85%; left:48%; animation-delay: 2.5s;"></span>
+    <span style="top:55%; left:90%; animation-delay: 0.5s;"></span>
+  </div>
+
+  <main class="card">
+    <svg class="logo" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SysonDev Labs">
+      <defs>
+        <linearGradient id="brandGrad" x1="140" y1="20" x2="260" y2="220" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#2DE2E6"/>
+          <stop offset="100%" stop-color="#7C5CFC"/>
+        </linearGradient>
+        <clipPath id="flaskClip">
+          <path d="M182,44 L218,44 L218,88 L262,132 L272,164 L254,180 L146,180 L128,164 L138,132 L182,88 L182,44 Z"/>
+        </clipPath>
+      </defs>
+      <g>
+        <rect x="120" y="122" width="160" height="58" fill="url(#brandGrad)" clip-path="url(#flaskClip)"/>
+        <path d="M182,44 L218,44 L218,88 L262,132 L272,164 L254,180 L146,180 L128,164 L138,132 L182,88 L182,44 Z"
+              fill="none" stroke="url(#brandGrad)" stroke-width="5.4" stroke-linejoin="miter"/>
+        <g stroke="url(#brandGrad)" stroke-width="2.6" opacity="0.9">
+          <line x1="200" y1="98" x2="218" y2="58"/>
+          <line x1="218" y1="58" x2="206" y2="22"/>
+        </g>
+        <circle cx="200" cy="98" r="8" fill="url(#brandGrad)"/>
+        <circle cx="218" cy="58" r="5.7" fill="url(#brandGrad)"/>
+        <circle cx="206" cy="22" r="4.2" fill="#2DE2E6"/>
+      </g>
+    </svg>
+
+    <h1>SysonDev<span style="color:#7C8AAE; font-weight:600;"> Labs</span></h1>
+    <p class="sub">Internet &middot; Crypto &middot; Automation</p>
+
+    <div class="status"><span class="dot"></span> En construcción</div>
+
+    <p class="msg">Estamos preparando SysonDev - Labs. Muy pronto más novedades por aquí.</p>
+
+    <a class="contact" href="mailto:johan.pardo.munoz@gmail.com">Contactar</a>
+  </main>
+
+  <footer>&copy; 2026 SysonDev - Labs</footer>
+
+</body>
+</html>
