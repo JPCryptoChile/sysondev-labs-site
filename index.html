@@ -140,11 +140,37 @@
     color: rgba(124, 138, 174, 0.55);
     z-index: 1;
   }
+
+  .lang-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    background: rgba(11, 24, 48, 0.6);
+    border: 1px solid rgba(233, 238, 251, 0.18);
+    color: var(--ice);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .lang-toggle:hover {
+    border-color: rgba(45, 226, 230, 0.6);
+    transform: translateY(-1px);
+  }
 </style>
 </head>
 <body>
 
   <canvas id="bg-network" aria-hidden="true"></canvas>
+
+  <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch to English">EN</button>
 
   <main class="card">
     <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SysonDev Labs">
@@ -187,16 +213,76 @@
     </svg>
 
     <h1>SysonDev<span style="color:#7C8AAE; font-weight:600;"> Labs</span></h1>
-    <p class="sub">Internet &middot; Crypto &middot; Automation</p>
+    <p class="sub" id="tagline">Blockchain &middot; Web3 &middot; Innovaci&oacute;n</p>
 
-    <div class="status"><span class="dot"></span> En construcción</div>
+    <div class="status"><span class="dot"></span> <span id="status-text">En construcción</span></div>
 
-    <p class="msg">Estamos preparando SysonDev - Labs. Muy pronto más novedades por aquí.</p>
+    <p class="msg" id="msg">Estamos preparando SysonDev - Labs. Muy pronto más novedades por aquí.</p>
 
-    <a class="contact" href="mailto:johan.pardo.munoz@gmail.com">Contactar</a>
+    <a class="contact" id="contact-link" href="mailto:johan.pardo.munoz@gmail.com">Contactar</a>
   </main>
 
   <footer>&copy; 2026 SysonDev - Labs</footer>
+
+  <script>
+  (() => {
+    const STORAGE_KEY = 'sysondev-lang';
+    const i18n = {
+      es: {
+        htmlLang: 'es',
+        docTitle: 'SysonDev - Labs',
+        description: 'SysonDev - Labs. Muy pronto.',
+        tagline: 'Blockchain · Web3 · Innovación',
+        status: 'En construcción',
+        message: 'Estamos preparando SysonDev - Labs. Muy pronto más novedades por aquí.',
+        contact: 'Contactar',
+        toggleLabel: 'EN',
+        toggleAria: 'Switch to English',
+      },
+      en: {
+        htmlLang: 'en',
+        docTitle: 'SysonDev - Labs',
+        description: 'SysonDev - Labs. Coming soon.',
+        tagline: 'Blockchain · Web3 · Innovation',
+        status: 'Under construction',
+        message: "We're building SysonDev - Labs. More news coming soon.",
+        contact: 'Contact',
+        toggleLabel: 'ES',
+        toggleAria: 'Cambiar a español',
+      },
+    };
+
+    const descriptionTag = document.querySelector('meta[name="description"]');
+    const taglineEl = document.getElementById('tagline');
+    const statusEl = document.getElementById('status-text');
+    const msgEl = document.getElementById('msg');
+    const contactEl = document.getElementById('contact-link');
+    const toggleBtn = document.getElementById('lang-toggle');
+
+    function applyLang(lang) {
+      const t = i18n[lang];
+      document.documentElement.lang = t.htmlLang;
+      document.title = t.docTitle;
+      descriptionTag.setAttribute('content', t.description);
+      taglineEl.textContent = t.tagline;
+      statusEl.textContent = t.status;
+      msgEl.textContent = t.message;
+      contactEl.textContent = t.contact;
+      toggleBtn.textContent = t.toggleLabel;
+      toggleBtn.setAttribute('aria-label', t.toggleAria);
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    }
+
+    let saved = null;
+    try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+    const browserLang = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'es';
+    applyLang(saved === 'en' || saved === 'es' ? saved : browserLang);
+
+    toggleBtn.addEventListener('click', () => {
+      applyLang(document.documentElement.lang === 'en' ? 'es' : 'en');
+    });
+  })();
+  </script>
 
   <script>
   (() => {
